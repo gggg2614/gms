@@ -12,15 +12,17 @@ export class Student {
     @Prop()
     gender: string
     @Prop()
-    idcard: number
-    @Prop()
-    stuprofession: string
+    phone: number
+    // @Prop()
+    // idcard: number
+    // @Prop()
+    // stuprofession: string
     @Prop()
     email: string
     @Prop()
-    address: string
+    address: Array<number>
     @Prop()
-    workplace: string
+    workplace: Array<number>
     @Prop()
     salary: number
     @Prop()
