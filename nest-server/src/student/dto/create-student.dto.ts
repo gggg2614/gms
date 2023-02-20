@@ -3,7 +3,7 @@ export class CreateStudentDto {
     readonly stuclasses: string
     readonly genders: string
     // readonly idcards: number
-    readonly phone: number
+    readonly phone: string
     // readonly stuprofessions: string
     readonly emails: string
     readonly address: Array<number>

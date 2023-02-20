@@ -12,7 +12,7 @@ export class Student {
     @Prop()
     gender: string
     @Prop()
-    phone: number
+    phone: string
     // @Prop()
     // idcard: number
     // @Prop()

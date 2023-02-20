@@ -16,3 +16,11 @@ export const delStu=(id)=>{
 export const editStu=(id,data)=>{
   return http.request('PATCH',`http://localhost:3000/student/${id}`,{data})
 }
+
+export const findStu=(phone?)=>{
+  if (phone) {
+    return http.request('get',`http://localhost:3000/student/${phone}`)
+  }
+  else 
+  return http.request('get',`http://localhost:3000/student`)
+}

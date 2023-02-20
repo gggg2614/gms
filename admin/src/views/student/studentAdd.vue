@@ -4,7 +4,10 @@ import { regionData } from "element-china-area-data";
 import { ElMessage, FormInstance, FormRules } from "element-plus";
 import { validEmail, validPhone, validName } from "@/utils/validate";
 import { addStu } from "../../api/student";
+import {useRouter} from 'vue-router'
+
 const options = regionData;
+const router = useRouter()
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = ref({
   stuname: "",
@@ -23,19 +26,20 @@ const ruleForm = ref({
 //提交
 const onSubmit = async () => {
   ruleFormRef.value.validate(async (valid: boolean) => {
-  if (valid) {
-  const res: any = await addStu(ruleForm.value);
-  console.log(ruleForm.value);
-  console.log(res);
-  if (res._id) {
-    ElMessage({ type: "success", message: "添加成功" });
-  } else {
-    ElMessage({
-      type: "error",
-      message: res?.msg || "网络异常，请稍后重试！"
-    });
-  }
-  }
+    if (valid) {
+      const res: any = await addStu(ruleForm.value);
+      console.log(ruleForm.value);
+      console.log(res);
+      if (res._id) {
+        ElMessage({ type: "success", message: "添加成功" });
+        router.push('/student/list')
+      } else {
+        ElMessage({
+          type: "error",
+          message: res?.msg || "网络异常，请稍后重试！"
+        });
+      }
+    }
   });
 };
 

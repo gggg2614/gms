@@ -8,33 +8,34 @@ import { Model } from 'mongoose';
 @Injectable()
 export class StudentService {
   constructor(
-    @InjectModel(Student.name) private readonly studentModel: Model<StudentDocument>
-  ) { }
+    @InjectModel(Student.name)
+    private readonly studentModel: Model<StudentDocument>,
+  ) {}
 
   async create(createStudentDto: CreateStudentDto) {
-    const createdStudentDto = await this.studentModel.create(createStudentDto)
-    return createdStudentDto
+    const createdStudentDto = await this.studentModel.create(createStudentDto);
+    return createdStudentDto;
   }
 
   findAll(): Promise<Student[]> {
-    return this.studentModel.find().exec()
+    return this.studentModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} student`;
+  findOne(phone: string): Promise<Student[]> {
+    return this.studentModel.find({ phone: { $regex: phone } }).exec();
   }
 
   async update(id: string, updateStudentDto: UpdateStudentDto) {
     const updatedStudent = await this.studentModel
       .findByIdAndUpdate(id, updateStudentDto)
-      .exec()
-    return updatedStudent
+      .exec();
+    return updatedStudent;
   }
 
   async remove(id: string) {
     const deletedStudent = await this.studentModel
       .findByIdAndRemove({ _id: id })
-      .exec()
-    return deletedStudent
+      .exec();
+    return deletedStudent;
   }
 }

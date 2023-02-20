@@ -17,9 +17,10 @@ export class StudentController {
     return this.studentService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.studentService.findOne(+id);
+  @Get(':phone')
+  findOne(@Param('phone') phone: string) {
+    console.log(phone)
+    return this.studentService.findOne(phone);
   }
 
   @Patch(':id')
