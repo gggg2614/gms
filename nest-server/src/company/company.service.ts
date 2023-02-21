@@ -8,32 +8,33 @@ import { Model } from 'mongoose';
 @Injectable()
 export class CompanyService {
   constructor(
-    @InjectModel(Company.name) private readonly companyModel: Model<CompanyDocument>
-  ) { }
+    @InjectModel(Company.name)
+    private readonly companyModel: Model<CompanyDocument>,
+  ) {}
   async create(createCompanyDto: CreateCompanyDto) {
-    const createdCompanyDto = await this.companyModel.create(createCompanyDto)
-    return createdCompanyDto
+    const createdCompanyDto = await this.companyModel.create(createCompanyDto);
+    return createdCompanyDto;
   }
 
   findAll(): Promise<Company[]> {
-    return this.companyModel.find().exec()
+    return this.companyModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} company`;
+  findOne(comname: string) :Promise<Company[]> {
+    return this.companyModel.find({ comname: { $regex: comname } }).exec();
   }
 
   async update(id: string, updateCompanyDto: UpdateCompanyDto) {
     const updatedCompany = await this.companyModel
       .findByIdAndUpdate(id, updateCompanyDto)
-      .exec()
-    return updatedCompany
+      .exec();
+    return updatedCompany;
   }
 
   async remove(id: string) {
     const deletedCompany = await this.companyModel
       .findByIdAndRemove({ _id: id })
-      .exec()
-    return deletedCompany
+      .exec();
+    return deletedCompany;
   }
 }

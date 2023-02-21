@@ -4,15 +4,11 @@
       <el-input
         style="width: 200px"
         v-model="phoneFind"
-        placeholder="请输入手机号"
+        placeholder="请输入公司名"
         size="default"
         clearable
       ></el-input>
-      <el-button
-        type="primary"
-        size="default"
-        @click="handleFindPhone"
-        v-btn-debounce
+      <el-button type="primary" size="default" @click="handleFindPhone" v-btn-debounce
         >查找</el-button
       >
     </div>
@@ -25,49 +21,22 @@
           :inline="false"
           size="default"
         >
-          <ElFormItem label="姓名" prop="stuname">
-            <ElInput v-model="editData.stuname"></ElInput>
+          <ElFormItem label="姓名" prop="comname">
+            <ElInput v-model="editData.comname"></ElInput>
           </ElFormItem>
-          <ElFormItem label="性别" prop="gender">
-            <ElRadioGroup v-model="editData.gender">
-              <ElRadioButton label="男" />
-              <ElRadioButton label="女" />
-            </ElRadioGroup>
+          <ElFormItem label="岗位" prop="job">
+            <ElInput v-model="editData.comjob"></ElInput>
           </ElFormItem>
-          <ElFormItem label="班级" prop="stuclass">
-            <ElInput v-model="editData.stuclass"></ElInput>
-          </ElFormItem>
-          <ElFormItem label="手机号" prop="phone">
-            <ElInput v-model="editData.phone" maxlength="11"></ElInput>
-          </ElFormItem>
-          <ElFormItem label="专业" prop="industry">
+          <ElFormItem label="行业" prop="industry">
             <ElInput v-model="editData.industry"></ElInput>
           </ElFormItem>
           <ElFormItem label="薪资" prop="salary">
-            <ElInput v-model="editData.salary"></ElInput>
-          </ElFormItem>
-          <ElFormItem label="邮箱" prop="email">
-            <ElInput v-model="editData.email"></ElInput>
-          </ElFormItem>
-          <ElFormItem label="岗位" prop="job">
-            <ElInput v-model="editData.job"></ElInput>
-          </ElFormItem>
-          <ElFormItem label="公司" prop="company">
-            <ElInput v-model="editData.company"></ElInput>
+            <ElInput v-model="editData.comsalary"></ElInput>
           </ElFormItem>
           <ElFormItem label="住址" prop="address">
             <ElCascader
-              :options="options"
-              v-model="editData.address"
-              clearable
-              filterable
-            >
-            </ElCascader>
-          </ElFormItem>
-          <ElFormItem label="工作地点" prop="workplace">
-            <ElCascader
-              :options="options"
-              v-model="editData.workplace"
+            :options="options"
+              v-model="editData.comaria"
               clearable
               filterable
             >
@@ -85,26 +54,16 @@
 
     <el-table :data="tableData" style="width: 100%" v-loading="tableLoading">
       <!-- <el-table-column prop="_id" label="id" width="180" /> -->
-      <el-table-column prop="stuname" label="名字" />
-      <el-table-column prop="gender" label="性别" />
-      <el-table-column prop="stuclass" label="班级" />
-      <el-table-column prop="phone" label="手机号" width="110" />
-      <el-table-column prop="industry" label="专业" width="110" />
-      <el-table-column prop="salary" label="薪资" />
-      <el-table-column prop="email" label="邮箱" width="155" />
-      <el-table-column prop="job" label="岗位" />
-      <el-table-column prop="company" label="公司" />
-      <el-table-column label="住址">
-        <template v-slot="scope">
-          {{ scope.row.address.map(d => CodeToText[d]).toString() }}
-        </template>
-      </el-table-column>
+      <el-table-column prop="comname" label="名字" />
+      <el-table-column prop="comjob" label="岗位" />
+      <el-table-column prop="industry" label="行业" />
+      <el-table-column prop="comsalary" label="薪资" />
       <el-table-column label="工作地点">
         <template v-slot="scope">
-          {{ scope.row.workplace.map(d => CodeToText[d]).toString() }}
+          {{ scope.row.comaria.map(d => CodeToText[d]).toString() }}
         </template>
       </el-table-column>
-      <el-table-column v-slot="scope" width="155">
+      <el-table-column v-slot="scope" width="160">
         <el-button
           v-btn-debounce
           type="primary"
@@ -123,7 +82,7 @@
 <script lang="ts" setup>
 import { onMounted } from "vue";
 import { ref } from "vue";
-import { delStu, editStu, findStu } from "@/api/student";
+import {delCom,editCom,findCom} from '@/api/company'
 import { regionData, CodeToText } from "element-china-area-data";
 import { nextTick } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -134,24 +93,16 @@ let tableLoading = ref(true);
 let phoneFind = ref("");
 let editData = ref({
   _id: "",
-  stuname: "",
-  address: [],
-  gender: ref(""),
-  stuclass: "",
-  // idcard: null,
-  // stuprofession: "",
-  email: "",
-  workplace: "",
-  job: "",
-  salary: null,
+  comname: "",
+  comaria: [],
+  comsalary: ref(""),
+  comjob: "",
   industry: "",
-  phone: null,
-  company: ""
 });
 
 async function handleFindPhone() {
-  tableData.value = await findStu(phoneFind.value);
-  console.log(phoneFind);
+  tableData.value = await findCom(phoneFind.value);
+  console.log(phoneFind)
 }
 
 function hideLoading() {
@@ -160,7 +111,7 @@ function hideLoading() {
 
 function init() {
   nextTick(async () => {
-    tableData.value = await findStu();
+    tableData.value = await findCom();
     if (!tableData.value) {
       tableLoading.value = true;
     } else {
@@ -174,13 +125,13 @@ onMounted(async () => {
 });
 
 const deleteClick = async row => {
-  await ElMessageBox.confirm(`是否删除姓名为【${row.stuname}】学生？`, "提示", {
+  await ElMessageBox.confirm(`是否删除【${row.comname}】？`, "提示", {
     confirmButtonText: "确认",
     cancelButtonText: "取消",
     type: "warning"
   })
     .then(async () => {
-      const res: any = await delStu(row._id);
+      const res: any = await delCom(row._id);
       tableLoading.value = true;
       if (res._id) {
         tableLoading.value = false;
@@ -206,8 +157,8 @@ const dialogOpen = async row => {
 const handleEdit = async () => {
   let res;
   tableLoading.value = true;
-  res = await editStu(editData.value._id, editData.value);
-  tableData.value = await findStu();
+  res = await editCom(editData.value._id, editData.value);
+  tableData.value = await findCom();
   tableLoading.value = false;
   dialogVisible.value = false;
   if (res._id) {

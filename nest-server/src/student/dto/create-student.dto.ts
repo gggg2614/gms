@@ -4,7 +4,7 @@ export class CreateStudentDto {
     readonly genders: string
     // readonly idcards: number
     readonly phone: string
-    // readonly stuprofessions: string
+    readonly company: string
     readonly emails: string
     readonly address: Array<number>
     readonly workplaces: Array<number>

@@ -3,4 +3,5 @@ export class CreateCompanyDto {
     readonly comaria: Array<string>
     readonly comsalary: number
     readonly comjob: string
+    readonly industry: string
 }

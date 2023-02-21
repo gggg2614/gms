@@ -19,7 +19,6 @@ export class StudentController {
 
   @Get(':phone')
   findOne(@Param('phone') phone: string) {
-    console.log(phone)
     return this.studentService.findOne(phone);
   }
 

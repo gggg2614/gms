@@ -13,6 +13,8 @@ export class Company {
     comsalary: number
     @Prop()
     comjob: string
+    @Prop()
+    industry: string
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);
