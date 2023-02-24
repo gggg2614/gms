@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete,Header } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
@@ -17,6 +17,7 @@ export class CompanyController {
     return this.companyService.findAll();
   }
 
+  @Header('Cache-Control','max-age=10')
   @Get(':comname')
   findOne(@Param('comname') comname: string) {
     return this.companyService.findOne(comname);

@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive,onMounted } from "vue";
 import { regionData } from "element-china-area-data";
 import { ElMessage, FormInstance, FormRules } from "element-plus";
 import { validEmail, validPhone, validName } from "@/utils/validate";
 import { addCom } from "../../api/company";
 import { useRouter } from "vue-router";
+import injson from '@/assets/json/industry.json'
 
 const options = regionData;
+let inoptions = ref()
 const router = useRouter();
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = ref({
@@ -17,6 +19,9 @@ const ruleForm = ref({
   industry: "",
   phone: null
 });
+onMounted(()=>{
+  inoptions.value = injson
+})
 //提交
 const onSubmit = async () => {
   ruleFormRef.value.validate(async (valid: boolean) => {
@@ -78,7 +83,7 @@ const rules = reactive<FormRules>({
     { validator: validateEmailRule, trigger: "blur" }
   ],
   comsalary: [{ required: true, message: "请输入薪资", trigger: "blur" }],
-  industry: [{ required: true, message: "请输入行业", trigger: "blur" }],
+  industry: [{ required: true, message: "请输入行业", trigger: "blur" }]
 });
 </script>
 
@@ -100,7 +105,14 @@ const rules = reactive<FormRules>({
     </ElFormItem>
 
     <ElFormItem label="行业" prop="industry">
-      <ElInput v-model="ruleForm.industry"></ElInput>
+      <el-cascader
+        :options="inoptions"
+        v-model="ruleForm.industry"
+        clearable
+        filterable
+        :show-all-levels="false"
+      >
+      </el-cascader>
     </ElFormItem>
     <ElFormItem label="薪资" prop="comsalary">
       <ElInput v-model="ruleForm.comsalary"></ElInput>

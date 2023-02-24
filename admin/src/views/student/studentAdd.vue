@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { regionData } from "element-china-area-data";
 import { ElMessage, FormInstance, FormRules } from "element-plus";
 import { validEmail, validPhone, validName } from "@/utils/validate";
 import { addStu } from "../../api/student";
-import {useRouter} from 'vue-router'
+import { useRouter } from "vue-router";
+import { findAllcom } from "../../api/company";
 
 const options = regionData;
-const router = useRouter()
+let companyOptions = ref([]);
+const router = useRouter();
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = ref({
   stuname: "",
@@ -22,7 +24,15 @@ const ruleForm = ref({
   salary: null,
   industry: "",
   phone: null,
-  company:''
+  company: ""
+});
+
+onMounted(async () => {
+  let value: any = await findAllcom();
+  companyOptions.value = value.map(v => ({
+    value: v.comname,
+    label: v.comname
+  }));
 });
 //提交
 const onSubmit = async () => {
@@ -33,7 +43,7 @@ const onSubmit = async () => {
       console.log(res);
       if (res._id) {
         ElMessage({ type: "success", message: "添加成功" });
-        router.push('/student/list')
+        router.push("/student/list");
       } else {
         ElMessage({
           type: "error",
@@ -113,16 +123,17 @@ const rules = reactive<FormRules>({
       </ElRadioGroup>
     </ElFormItem>
 
-    <ElFormItem label="班级" prop="stuclass">
-      <ElInput v-model="ruleForm.stuclass"></ElInput>
+    <ElFormItem label="专业" prop="industry" style="display: inline-flex;">
+      <ElInput v-model="ruleForm.industry"></ElInput>
+    </ElFormItem>
+    <ElFormItem label="班级" prop="stuclass" style="width: 400px;" >
+      <el-slider v-model="ruleForm.stuclass" show-input :min="1" :max="20"/>
+      <!-- <ElInput v-model="ruleForm.stuclass"></ElInput> -->
     </ElFormItem>
     <ElFormItem label="手机号" prop="phone">
       <ElInput v-model="ruleForm.phone" maxlength="11"></ElInput>
     </ElFormItem>
 
-    <ElFormItem label="专业" prop="industry">
-      <ElInput v-model="ruleForm.industry"></ElInput>
-    </ElFormItem>
     <ElFormItem label="薪资" prop="salary">
       <ElInput v-model="ruleForm.salary"></ElInput>
     </ElFormItem>
@@ -132,8 +143,18 @@ const rules = reactive<FormRules>({
     <ElFormItem label="岗位" prop="job">
       <ElInput v-model="ruleForm.job"></ElInput>
     </ElFormItem>
-    <ElFormItem label="公司" prop="company">
+    <!-- <ElFormItem label="公司" prop="company">
       <ElInput v-model="ruleForm.company"></ElInput>
+    </ElFormItem> -->
+    <ElFormItem label="公司" prop="company">
+      <el-cascader
+        :options="companyOptions"
+        v-model="ruleForm.company"
+        clearable
+        filterable
+        :show-all-levels="false"
+      >
+      </el-cascader>
     </ElFormItem>
     <ElFormItem label="工作地点" prop="workplace">
       <ElCascader

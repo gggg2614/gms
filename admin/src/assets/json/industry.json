@@ -1,0 +1,585 @@
+[
+    {
+        "id": 1001,
+        "value": "IT服务",
+        "label": "IT服务",
+        "children": [
+            {
+                "id": 1001000,
+                "value": "计算机软件/硬件/信息服务",
+                "label": "计算机软件/硬件/信息服务",
+                "children": []
+            },
+            {
+                "id": 1001001,
+                "value": "互联网和相关服务",
+                "label": "互联网和相关服务",
+                "children": []
+            },
+            {
+                "id": 1001002,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1002,
+        "value": "制造业",
+        "label": "制造业",
+        "children": [
+            {
+                "id": 1002000,
+                "value": "机械/电子",
+                "label": "机械/电子",
+                "children": []
+            },
+            {
+                "id": 1003000,
+                "value": "服装/纺织",
+                "label": "服装/纺织",
+                "children": []
+            },
+            {
+                "id": 1002002,
+                "value": "汽车",
+                "label": "汽车",
+                "children": []
+            },
+            {
+                "id": 1002005,
+                "value": "金属制品",
+                "label": "金属制品",
+                "children": []
+            },
+            {
+                "id": 1003002,
+                "value": "食品/饮料",
+                "label": "食品/饮料",
+                "children": []
+            },
+            {
+                "id": 1003003,
+                "value": "家具/家纺",
+                "label": "家具/家纺",
+                "children": []
+            },
+            {
+                "id": 1002001,
+                "value": "重工制造",
+                "label": "重工制造",
+                "children": []
+            },
+            {
+                "id": 1003005,
+                "value": "家电/数码",
+                "label": "家电/数码",
+                "children": []
+            },
+            {
+                "id": 1002004,
+                "value": "橡胶/塑料",
+                "label": "橡胶/塑料",
+                "children": []
+            },
+            {
+                "id": 1003004,
+                "value": "日用品/化妆品",
+                "label": "日用品/化妆品",
+                "children": []
+            },
+            {
+                "id": 1002006,
+                "value": "化学原料制品",
+                "label": "化学原料制品",
+                "children": []
+            },
+            {
+                "id": 1003007,
+                "value": "文教/工美/体育/娱乐用品",
+                "label": "文教/工美/体育/娱乐用品",
+                "children": []
+            },
+            {
+                "id": 1003006,
+                "value": "烟酒/茶",
+                "label": "烟酒/茶",
+                "children": []
+            },
+            {
+                "id": 1002007,
+                "value": "非金属矿物",
+                "label": "非金属矿物",
+                "children": []
+            },
+            {
+                "id": 1002003,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1003,
+        "value": "批发/零售",
+        "label": "批发/零售",
+        "children": [
+            {
+                "id": 1003008,
+                "value": "批发",
+                "label": "批发",
+                "children": []
+            },
+            {
+                "id": 1003010,
+                "value": "零售",
+                "label": "零售",
+                "children": []
+            },
+            {
+                "id": 1003001,
+                "value": "超市/便利店/百货商场",
+                "label": "超市/便利店/百货商场",
+                "children": []
+            },
+            {
+                "id": 1003011,
+                "value": "进出口",
+                "label": "进出口",
+                "children": []
+            },
+            {
+                "id": 1003009,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1004,
+        "value": "生活服务",
+        "label": "生活服务",
+        "children": [
+            {
+                "id": 1004001,
+                "value": "餐饮",
+                "label": "餐饮",
+                "children": []
+            },
+            {
+                "id": 1004004,
+                "value": "居民服务",
+                "label": "居民服务",
+                "children": []
+            },
+            {
+                "id": 1004002,
+                "value": "租赁和商务服务",
+                "label": "租赁和商务服务",
+                "children": []
+            },
+            {
+                "id": 1004000,
+                "value": "酒店/住宿",
+                "label": "酒店/住宿",
+                "children": []
+            },
+            {
+                "id": 1004003,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1005,
+        "value": "文化/体育/娱乐业",
+        "label": "文化/体育/娱乐业",
+        "children": [
+            {
+                "id": 1005001,
+                "value": "文化/体育",
+                "label": "文化/体育",
+                "children": []
+            },
+            {
+                "id": 1005002,
+                "value": "娱乐/旅游",
+                "label": "娱乐/旅游",
+                "children": []
+            },
+            {
+                "id": 1005000,
+                "value": "新闻传媒",
+                "label": "新闻传媒",
+                "children": []
+            },
+            {
+                "id": 1005003,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1006,
+        "value": "建筑/房地产",
+        "label": "建筑/房地产",
+        "children": [
+            {
+                "id": 1006001,
+                "value": "建筑业",
+                "label": "建筑业",
+                "children": []
+            },
+            {
+                "id": 1006002,
+                "value": "建材装修",
+                "label": "建材装修",
+                "children": []
+            },
+            {
+                "id": 1006000,
+                "value": "房地产",
+                "label": "房地产",
+                "children": []
+            },
+            {
+                "id": 1006003,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1007,
+        "value": "教育",
+        "label": "教育",
+        "children": [
+            {
+                "id": 1007000,
+                "value": "学前教育",
+                "label": "学前教育",
+                "children": [],
+                "desc": "如：托儿所、幼儿园"
+            },
+            {
+                "id": 1007001,
+                "value": "初中等教育",
+                "label": "初中等教育",
+                "children": [],
+                "desc": "如：小学、初中、高中、职高"
+            },
+            {
+                "id": 1007002,
+                "value": "高等教育",
+                "label": "高等教育",
+                "children": [],
+                "desc": "如：大学、高职、高专"
+            },
+            {
+                "id": 1007003,
+                "value": "培训机构",
+                "label": "培训机构",
+                "children": []
+            },
+            {
+                "id": 1007004,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1008,
+        "value": "运输/物流/仓储",
+        "label": "运输/物流/仓储",
+        "children": [
+            {
+                "id": 1008003,
+                "value": "物流/仓储",
+                "label": "物流/仓储",
+                "children": []
+            },
+            {
+                "id": 1008000,
+                "value": "道路/铁路运输",
+                "label": "道路/铁路运输",
+                "children": []
+            },
+            {
+                "id": 1008004,
+                "value": "邮政/快递",
+                "label": "邮政/快递",
+                "children": []
+            },
+            {
+                "id": 1008001,
+                "value": "航空运输",
+                "label": "航空运输",
+                "children": []
+            },
+            {
+                "id": 1008002,
+                "value": "水上运输",
+                "label": "水上运输",
+                "children": []
+            },
+            {
+                "id": 1008005,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1009,
+        "value": "医疗",
+        "label": "医疗",
+        "children": [
+            {
+                "id": 1009000,
+                "value": "医院/医疗机构",
+                "label": "医院/医疗机构",
+                "children": []
+            },
+            {
+                "id": 1009003,
+                "value": "医疗器械",
+                "label": "医疗器械",
+                "children": []
+            },
+            {
+                "id": 1009001,
+                "value": "医药制造",
+                "label": "医药制造",
+                "children": []
+            },
+            {
+                "id": 1009002,
+                "value": "医药流通",
+                "label": "医药流通",
+                "children": []
+            },
+            {
+                "id": 1009004,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1010,
+        "value": "政府",
+        "label": "政府",
+        "children": [
+            {
+                "id": 1010000,
+                "value": "党政机关",
+                "label": "党政机关",
+                "children": []
+            },
+            {
+                "id": 1010001,
+                "value": "国家权力/行政机构",
+                "label": "国家权力/行政机构",
+                "children": []
+            },
+            {
+                "id": 1010002,
+                "value": "检察院/法院/公安",
+                "label": "检察院/法院/公安",
+                "children": []
+            },
+            {
+                "id": 1010003,
+                "value": "民政/人社/交通/卫生",
+                "label": "民政/人社/交通/卫生",
+                "children": []
+            },
+            {
+                "id": 1010004,
+                "value": "发改委/经信委/商务局/统计局",
+                "label": "发改委/经信委/商务局/统计局",
+                "children": []
+            },
+            {
+                "id": 1010005,
+                "value": "国土/规划",
+                "label": "国土/规划",
+                "children": []
+            },
+            {
+                "id": 1010006,
+                "value": "税务/海关/工商/环保/物价/药品",
+                "label": "税务/海关/工商/环保/物价/药品",
+                "children": []
+            },
+            {
+                "id": 1010007,
+                "value": "政协/民主党派",
+                "label": "政协/民主党派",
+                "children": []
+            },
+            {
+                "id": 1010008,
+                "value": "地方政府",
+                "label": "地方政府",
+                "children": []
+            },
+            {
+                "id": 1010009,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1011,
+        "value": "金融",
+        "label": "金融",
+        "children": [
+            {
+                "id": 1011000,
+                "value": "保险",
+                "label": "保险",
+                "children": []
+            },
+            {
+                "id": 1011001,
+                "value": "银行",
+                "label": "银行",
+                "children": []
+            },
+            {
+                "id": 1011002,
+                "value": "证券/投资/基金",
+                "label": "证券/投资/基金",
+                "children": []
+            },
+            {
+                "id": 1011003,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1012,
+        "value": "能源/采矿",
+        "label": "能源/采矿",
+        "children": [
+            {
+                "id": 1014003,
+                "value": "电力/热力/燃气/水供应业",
+                "label": "电力/热力/燃气/水供应业",
+                "children": []
+            },
+            {
+                "id": 1012003,
+                "value": "石油/天然气",
+                "label": "石油/天然气",
+                "children": []
+            },
+            {
+                "id": 1012002,
+                "value": "煤炭",
+                "label": "煤炭",
+                "children": []
+            },
+            {
+                "id": 1012001,
+                "value": "有色金属",
+                "label": "有色金属",
+                "children": []
+            },
+            {
+                "id": 1012000,
+                "value": "钢铁",
+                "label": "钢铁",
+                "children": []
+            },
+            {
+                "id": 1012004,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1013,
+        "value": "农林渔牧",
+        "label": "农林渔牧",
+        "children": [
+            {
+                "id": 1013000,
+                "value": "农林渔牧",
+                "label": "农林渔牧",
+                "children": []
+            }
+        ],
+        "icon": ""
+    },
+    {
+        "id": 1014,
+        "value": "其他行业",
+        "label": "其他行业",
+        "children": [
+            {
+                "id": 1014000,
+                "value": "科学研究和技术服务业",
+                "label": "科学研究和技术服务业",
+                "children": []
+            },
+            {
+                "id": 1014002,
+                "value": "社会组织",
+                "label": "社会组织",
+                "children": []
+            },
+            {
+                "id": 1014001,
+                "value": "水利和环境管理",
+                "label": "水利和环境管理",
+                "children": []
+            },
+            {
+                "id": 1014004,
+                "value": "国际组织",
+                "label": "国际组织",
+                "children": []
+            },
+            {
+                "id": 1014005,
+                "value": "其他",
+                "label": "其他",
+                "children": []
+            }
+        ],
+        "icon": ""
+    }
+]

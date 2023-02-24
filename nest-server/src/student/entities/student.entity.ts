@@ -30,7 +30,7 @@ export class Student {
   @Prop()
   industry: string;
   @Prop()
-  company: string;
+  company: Array<string>;
 }
 
 export const StudentSchema = SchemaFactory.createForClass(Student);
