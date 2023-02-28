@@ -1,14 +1,22 @@
 <script setup lang="ts">
-import { ref, reactive,onMounted } from "vue";
+import { ref, reactive, onMounted, onBeforeUnmount, shallowRef } from "vue";
 import { regionData } from "element-china-area-data";
 import { ElMessage, FormInstance, FormRules } from "element-plus";
 import { validEmail, validPhone, validName } from "@/utils/validate";
 import { addCom } from "../../api/company";
 import { useRouter } from "vue-router";
-import injson from '@/assets/json/industry.json'
+import injson from "@/assets/json/industry.json";
+import "@wangeditor/editor/dist/css/style.css"; // 引入 css
+
+import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+
+const editorRef = shallowRef();
+
+const toolbarConfig = {};
+const editorConfig = { placeholder: "请输入内容..." };
 
 const options = regionData;
-let inoptions = ref()
+let inoptions = ref();
 const router = useRouter();
 const ruleFormRef = ref<FormInstance>();
 const ruleForm = ref({
@@ -17,18 +25,28 @@ const ruleForm = ref({
   comsalary: ref(""),
   comjob: "",
   industry: "",
-  phone: null
+  // phone: null,
+  detail:ref('')
 });
-onMounted(()=>{
-  inoptions.value = injson
-})
+const handleCreated = editor => {
+  editorRef.value = editor; // 记录 editor 实例，重要！
+};
+onMounted(() => {
+  inoptions.value = injson;
+});
+
+onBeforeUnmount(() => {
+  const editor = editorRef.value;
+  if (editor == null) return;
+  editor.destroy();
+});
 //提交
 const onSubmit = async () => {
   ruleFormRef.value.validate(async (valid: boolean) => {
     if (valid) {
       const res: any = await addCom(ruleForm.value);
       console.log(ruleForm.value);
-      console.log(res);
+      // console.log(res);
       if (res._id) {
         ElMessage({ type: "success", message: "添加成功" });
         router.push("/company/list");
@@ -129,6 +147,23 @@ const rules = reactive<FormRules>({
         filterable
       >
       </ElCascader>
+    </ElFormItem>
+    <ElFormItem label="细节" prop="detail">
+      <div style="border: 1px solid #ccc">
+        <Toolbar
+          style="border-bottom: 1px solid #ccc"
+          :editor="editorRef"
+          :defaultConfig="toolbarConfig"
+          mode="default"
+        />
+        <Editor
+          style="height: 500px; overflow-y: hidden"
+          v-model="ruleForm.detail"
+          :defaultConfig="editorConfig"
+          mode="default"
+          @onCreated="handleCreated"
+        />
+      </div>
     </ElFormItem>
     <ElFormItem>
       <ElButton type="primary" @click="onSubmit()">立即创建</ElButton>

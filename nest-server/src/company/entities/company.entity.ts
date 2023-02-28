@@ -10,11 +10,15 @@ export class Company {
     @Prop()
     comaria: Array<string>
     @Prop()
-    comsalary: number
+    comsalary: string
     @Prop()
     comjob: string
     @Prop()
     industry: Array<string>
+    @Prop()
+    detail: string
+    @Prop()
+    phone: number
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

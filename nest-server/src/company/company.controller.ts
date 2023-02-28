@@ -17,6 +17,11 @@ export class CompanyController {
     return this.companyService.findAll();
   }
 
+  @Get(':_id')
+  findById(@Param('_id') _id:string) {
+    return this.companyService.findById(_id);
+  }
+
   @Header('Cache-Control','max-age=10')
   @Get(':comname')
   findOne(@Param('comname') comname: string) {

@@ -20,8 +20,12 @@ export class CompanyService {
     return this.companyModel.find().exec();
   }
 
-  findOne(comname: string) :Promise<Company[]> {
+  findOne(comname: string): Promise<Company[]> {
     return this.companyModel.find({ comname: { $regex: comname } }).exec();
+  }
+
+  findById(_id: string): Promise<Company[]> {
+    return this.companyModel.find({ _id: { _id } }).exec();
   }
 
   async update(id: string, updateCompanyDto: UpdateCompanyDto) {

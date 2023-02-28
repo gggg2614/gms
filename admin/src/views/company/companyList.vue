@@ -8,11 +8,15 @@
         size="default"
         clearable
       ></el-input>
-      <el-button type="primary" size="default" @click="handleFindPhone" v-btn-debounce
+      <el-button
+        type="primary"
+        size="default"
+        @click="handleFindPhone"
+        v-btn-debounce
         >查找</el-button
       >
     </div>
-    <el-dialog title="编辑学生信息" v-model="dialogVisible" width="30%">
+    <el-dialog title="编辑学生信息" v-model="dialogVisible" width="50%">
       <span slot="footer">
         <ElForm
           :model="editData"
@@ -35,12 +39,29 @@
           </ElFormItem>
           <ElFormItem label="住址" prop="address">
             <ElCascader
-            :options="options"
+              :options="options"
               v-model="editData.comaria"
               clearable
               filterable
             >
             </ElCascader>
+          </ElFormItem>
+          <ElFormItem label="细节" prop="detail">
+            <div style="border: 1px solid #ccc">
+              <Toolbar
+                style="border-bottom: 1px solid #ccc"
+                :editor="editorRef"
+                :defaultConfig="toolbarConfig"
+                mode="default"
+              />
+              <Editor
+                style="height: 500px; overflow-y: hidden"
+                v-model="editData.detail"
+                :defaultConfig="editorConfig"
+                mode="default"
+                @onCreated="handleCreated"
+              />
+            </div>
           </ElFormItem>
         </ElForm>
         <div style="display: flex; justify-content: center">
@@ -80,12 +101,21 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from "vue";
+import { onMounted, shallowRef } from "vue";
 import { ref } from "vue";
-import {delCom,editCom,findCom} from '@/api/company'
+import { delCom, editCom, findCom } from "@/api/company";
 import { regionData, CodeToText } from "element-china-area-data";
 import { nextTick } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
+import "@wangeditor/editor/dist/css/style.css"; // 引入 css
+
+import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+
+const editorRef = shallowRef();
+
+const toolbarConfig = {};
+const editorConfig = { placeholder: "请输入内容..." };
+
 const options = regionData;
 let tableData = ref();
 let dialogVisible = ref(false);
@@ -98,11 +128,16 @@ let editData = ref({
   comsalary: ref(""),
   comjob: "",
   industry: "",
+  detail: ""
 });
+
+const handleCreated = editor => {
+  editorRef.value = editor; // 记录 editor 实例，重要！
+};
 
 async function handleFindPhone() {
   tableData.value = await findCom(phoneFind.value);
-  console.log(phoneFind)
+  console.log(phoneFind);
 }
 
 function hideLoading() {
@@ -151,6 +186,7 @@ const deleteClick = async row => {
 
 const dialogOpen = async row => {
   dialogVisible.value = true;
+  console.log(row);
   editData = ref(Object.assign({}, row));
 };
 
