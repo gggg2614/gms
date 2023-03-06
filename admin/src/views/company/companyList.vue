@@ -15,6 +15,16 @@
         v-btn-debounce
         >查找</el-button
       >
+      <el-upload
+        :action="importAPI"
+        ref="upload"
+        :auto-upload="true"
+        :limit="1"
+        :before-upload="beforeUpload"
+        style="display: inline; margin-left: 0.2em; vertical-align: bottom"
+      >
+        <el-button slot="trigger" size="default" type="primary">导入</el-button>
+      </el-upload>
     </div>
     <el-dialog title="编辑学生信息" v-model="dialogVisible" width="50%">
       <span slot="footer">
@@ -103,7 +113,7 @@
 <script lang="ts" setup>
 import { onMounted, shallowRef } from "vue";
 import { ref } from "vue";
-import { delCom, editCom, findCom } from "@/api/company";
+import { delCom, editCom, findCom, importCom } from "@/api/company";
 import { regionData, CodeToText } from "element-china-area-data";
 import { nextTick } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
@@ -112,11 +122,12 @@ import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 
 const editorRef = shallowRef();
-
+const importAPI = `http://localhost:3000/company/import`;
 const toolbarConfig = {};
 const editorConfig = { placeholder: "请输入内容..." };
 
 const options = regionData;
+let excelFile = ref(null);
 let tableData = ref();
 let dialogVisible = ref(false);
 let tableLoading = ref(true);
@@ -130,6 +141,23 @@ let editData = ref({
   industry: "",
   detail: ""
 });
+
+async function beforeUpload(file) {
+  if (file.name.split(".")[1] !== "xlsx") {
+    ElMessage.error("请上传xlsx");
+    return false;
+  }
+  excelFile = file;
+  console.log(excelFile);
+  const formData = new FormData();
+  formData.append("file", excelFile);
+  try {
+    console.log(formData);
+    const res = await importCom(formData);
+  } catch (error) {
+    // return false;
+  }
+}
 
 const handleCreated = editor => {
   editorRef.value = editor; // 记录 editor 实例，重要！

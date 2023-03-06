@@ -4,7 +4,7 @@ import { UpdateCompanyDto } from './dto/update-company.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Company, CompanyDocument } from './entities/company.entity';
 import { Model } from 'mongoose';
-
+import * as ExcelJS from 'exceljs';
 @Injectable()
 export class CompanyService {
   constructor(
@@ -40,5 +40,29 @@ export class CompanyService {
       .findByIdAndRemove({ _id: id })
       .exec();
     return deletedCompany;
+  }
+  
+  async importExcel(fileBuffer) {
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.load(fileBuffer);
+    const worksheet = workbook.getWorksheet(1);
+    const data = [];
+    worksheet.eachRow((row, rowNumber) => {
+      if (rowNumber !== 1) {
+        const rowData = {};
+        row.eachCell((cell, colNumber) => {
+          rowData[`column_${colNumber}`] = cell.value;
+        });
+        data.push(rowData);
+      }
+    });
+    return data
+  }
+
+  async exportExcel(filename) {
+    try {
+    } catch (error) {
+      return error;
+    }
   }
 }

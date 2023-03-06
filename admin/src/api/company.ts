@@ -22,3 +22,7 @@ export const findCom = (comname?) => {
     return http.request("get", `http://localhost:3000/company/${comname}`);
   } else return http.request("get", `http://localhost:3000/company`);
 };
+
+export const importCom = (file) => {
+  return http.request("POST", `http://localhost:3000/company/import`, file);
+};
