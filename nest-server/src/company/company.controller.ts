@@ -71,7 +71,6 @@ export class CompanyController {
       ])
       .flat();
     await this.companyModel.insertMany(newData);
-    console.log(newData);
     return { data };
   }
 }
