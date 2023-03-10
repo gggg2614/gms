@@ -6,8 +6,10 @@ import { validEmail, validPhone, validName } from "@/utils/validate";
 import { addStu } from "../../api/student";
 import { useRouter } from "vue-router";
 import { findAllcom } from "../../api/company";
+import injson from "@/assets/json/industry.json";
 
 const options = regionData;
+let inoptions = ref();
 let companyOptions = ref([]);
 const router = useRouter();
 const ruleFormRef = ref<FormInstance>();
@@ -15,7 +17,7 @@ const ruleForm = ref({
   stuname: "",
   address: [],
   gender: ref(""),
-  stuclass: "",
+  stuclass: null,
   // idcard: null,
   // stuprofession: "",
   email: "",
@@ -28,6 +30,7 @@ const ruleForm = ref({
 });
 
 onMounted(async () => {
+  inoptions.value = injson;
   let value: any = await findAllcom();
   companyOptions.value = value.map(v => ({
     value: v.comname,
@@ -124,7 +127,14 @@ const rules = reactive<FormRules>({
     </ElFormItem>
 
     <ElFormItem label="专业" prop="industry" style="display: inline-flex;">
-      <ElInput v-model="ruleForm.industry"></ElInput>
+      <el-cascader
+        :options="inoptions"
+        v-model="ruleForm.industry"
+        clearable
+        filterable
+        :show-all-levels="false"
+      >
+      </el-cascader>
     </ElFormItem>
     <ElFormItem label="班级" prop="stuclass" style="width: 400px;" >
       <el-slider v-model="ruleForm.stuclass" show-input :min="1" :max="20"/>

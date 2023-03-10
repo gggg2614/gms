@@ -16,6 +16,12 @@ const handleJump = (url: string) => {
 	router.push(url);
 };
 
+const getme = () => {
+	console.log(authStore);
+	console.log('me');
+	
+};
+
 // 登出
 const handleLoginOut = () => {
 	authStore.loginOut().then(() => {
@@ -31,9 +37,10 @@ const handleLoginOut = () => {
 				<view class="avatar">
 					<image class="img" src="/static/images/avatar.png" />
 				</view>
-				<view class="desc">{{ isLogin ? '测试' : '未登入' }}</view>
+				<view class="desc">{{ isLogin ? authStore.stuname : '未登入' }}</view>
 			</view>
 			<view class="cell"><BasicButton @click="handleJump('/pages/log/index?id=4345&title=log')">log</BasicButton></view>
+			<view><van-button type="primary" @click="getme">主要按钮</van-button> </view>
 			<view class="cell" v-if="isLogin"><BasicButton @click="handleLoginOut">登出</BasicButton></view>
 			<view class="cell" v-else>
 				<BasicButton @click="handleJump('/pages/login/index')"> 登入 </BasicButton>

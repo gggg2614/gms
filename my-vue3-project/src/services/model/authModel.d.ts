@@ -1,5 +1,5 @@
 declare interface LoginParams {
-	email: string;
+	username: string;
 	password: string;
 }
 declare interface LoginModel {

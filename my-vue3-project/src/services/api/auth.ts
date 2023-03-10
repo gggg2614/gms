@@ -1,6 +1,6 @@
 import { request } from '@/utils/http';
 
-const LOGIN = '/login';
+const LOGIN = '/auth/loginStu';
 const LOGIN_OUT = '/logout';
 const REFRESH_TOKEN = '/refresh/token';
 
@@ -8,12 +8,8 @@ const REFRESH_TOKEN = '/refresh/token';
  * 登录
  * @param params
  */
-export function login(params: LoginParams) {
-	return request.post<LoginModel>(LOGIN, params, {
-		custom: {
-			auth: false,
-		},
-	});
+export function login(params:any) {
+	return request.post(LOGIN, params)
 }
 
 /**

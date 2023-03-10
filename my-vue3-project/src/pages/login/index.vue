@@ -13,8 +13,8 @@ onLoad((query) => {
 const router = useRouter();
 
 const form = reactive({
-	email: 'uni-app@test.com',
-	password: 'Vue3_Ts_Vite',
+	email: '123@123.com',
+	password: '13222222222',
 });
 const authStore = useAuthStore();
 const submit = (e: any) => {
@@ -37,7 +37,7 @@ const submit = (e: any) => {
 		<view class="form-wrap">
 			<form class="form" @submit="submit">
 				<label class="form-item">
-					<view class="form-label">邮箱:</view>
+					<view class="form-label">用户名:</view>
 					<view class="form-element"><input name="email" :value="form.email" /></view>
 				</label>
 				<label class="form-item">

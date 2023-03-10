@@ -18,8 +18,10 @@
       <el-upload
         :action="importAPI"
         ref="upload"
+        :headers="getAuthHeaders()"
+        :on-success="uploadSucess"
         :auto-upload="true"
-        :limit="1"
+        :file-list="files"
         :before-upload="beforeUpload"
         style="display: inline; margin-left: 0.2em; vertical-align: bottom"
       >
@@ -42,7 +44,14 @@
             <ElInput v-model="editData.comjob"></ElInput>
           </ElFormItem>
           <ElFormItem label="行业" prop="industry">
-            <ElInput v-model="editData.industry"></ElInput>
+            <el-cascader
+              :options="inoptions"
+              v-model="editData.industry"
+              clearable
+              filterable
+              :show-all-levels="false"
+            >
+            </el-cascader>
           </ElFormItem>
           <ElFormItem label="薪资" prop="salary">
             <ElInput v-model="editData.comsalary"></ElInput>
@@ -120,6 +129,8 @@ import { ElMessage, ElMessageBox } from "element-plus";
 import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+import { getToken } from "../../utils/auth";
+import injson from "@/assets/json/industry.json";
 
 const editorRef = shallowRef();
 const importAPI = `http://localhost:3000/company/import`;
@@ -127,7 +138,8 @@ const toolbarConfig = {};
 const editorConfig = { placeholder: "请输入内容..." };
 
 const options = regionData;
-let excelFile = ref(null);
+let files = ref([]);
+let inoptions = ref();
 let tableData = ref();
 let dialogVisible = ref(false);
 let tableLoading = ref(true);
@@ -147,16 +159,24 @@ async function beforeUpload(file) {
     ElMessage.error("请上传xlsx");
     return false;
   }
-  excelFile = file;
-  console.log(excelFile);
-  const formData = new FormData();
-  formData.append("file", excelFile);
-  try {
-    console.log(formData);
-    const res = await importCom(formData);
-  } catch (error) {
-    // return false;
-  }
+}
+
+function uploadSucess(res, file, filelist) {
+  // this.$refs.upload.clearFiles();
+  console.log(res);
+  console.log(file);
+  console.log(filelist);
+  files.value = [];
+  filelist = [];
+  ElMessage({ type: "success", message: "上传成功" });
+
+  init();
+}
+
+function getAuthHeaders() {
+  return {
+    Authorization: "Bearer " + getToken().accessToken
+  };
 }
 
 const handleCreated = editor => {
@@ -185,6 +205,7 @@ function init() {
 
 onMounted(async () => {
   init();
+  inoptions.value = injson;
 });
 
 const deleteClick = async row => {

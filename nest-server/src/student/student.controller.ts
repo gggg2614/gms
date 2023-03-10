@@ -22,6 +22,11 @@ export class StudentController {
     return this.studentService.findOne(phone);
   }
 
+  @Get('mail/:email')
+  findByMail(@Param('email') email: string) {
+    return this.studentService.findByMail(email);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {
     return this.studentService.update(id, updateStudentDto);

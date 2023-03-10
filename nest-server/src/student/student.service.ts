@@ -25,6 +25,10 @@ export class StudentService {
     return this.studentModel.find({ phone: { $regex: phone } }).exec();
   }
 
+  findByMail(email: string) {
+    return this.studentModel.findOne({ email:email }).exec();
+  }
+
   async update(id: string, updateStudentDto: UpdateStudentDto) {
     const updatedStudent = await this.studentModel
       .findByIdAndUpdate(id, updateStudentDto)

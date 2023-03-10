@@ -24,11 +24,11 @@ export class Student {
   @Prop()
   workplace: Array<number>;
   @Prop()
-  salary: number;
+  salary: string;
   @Prop()
   job: string;
   @Prop()
-  industry: string;
+  industry: Array<string>;
   @Prop()
   company: Array<string>;
 }

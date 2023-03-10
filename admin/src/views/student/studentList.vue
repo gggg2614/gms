@@ -104,7 +104,7 @@
           {{ scope.row.workplace.map(d => CodeToText[d]).toString() }}
         </template>
       </el-table-column>
-      <el-table-column v-slot="scope" width="155">
+      <el-table-column v-slot="scope" width="158">
         <el-button
           v-btn-debounce
           type="primary"

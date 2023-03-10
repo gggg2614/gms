@@ -9,6 +9,6 @@ export class CreateStudentDto {
     readonly address: Array<number>
     readonly workplaces: Array<number>
     readonly jobs: string
-    readonly salaries: number
-    readonly industries: string
+    readonly salaries: string
+    readonly industries: Array<string>
 }
