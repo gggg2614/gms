@@ -29,7 +29,7 @@ const { title } = useNav();
         to="/"
       >
         <FontIcon icon="team-iconlogo" svg style="width: 35px; height: 35px" />
-        <span class="sidebar-title">{{ title }}</span>
+        <span class="sidebar-title">毕业生管理系统</span>
       </router-link>
     </transition>
   </div>

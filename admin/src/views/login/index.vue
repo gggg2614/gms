@@ -97,7 +97,7 @@ onBeforeUnmount(() => {
         <div class="login-form">
           <avatar class="avatar" />
           <Motion>
-            <h2 class="outline-none">{{ title }}</h2>
+            <h2 class="outline-none">毕业生信息管理系统</h2>
           </Motion>
 
           <el-form
