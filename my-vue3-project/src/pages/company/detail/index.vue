@@ -4,7 +4,7 @@
 		<div class="job-title">{{ detail.comjob }}</div>
 		<div class="job-salary">{{ detail.comsalary }}</div>
 	  </div>
-	  <div class="job-details-aria">{{ detail.comaria.map((d) => CodeToText[d]).join(', ') }}</div>
+	  <div class="job-details-aria">{{ comariaText }}</div>
 	  <div class="job-details-content" v-html="detail.detail"></div>
 	</div>
   </template>
@@ -12,23 +12,24 @@
   <script setup lang="ts">
   import { onLoad } from '@dcloudio/uni-app';
   import { findById } from '../../../services/api/user';
-  import { ref } from 'vue';
+  import { computed, ref } from 'vue';
   import { onMounted } from 'vue';
   import { CodeToText } from 'element-china-area-data';
   
   let res = ref();
   let detail = ref({
-	comname: '',
-	comjob: '',
-	comaria: [],
-	detail: '',
-	comsalary: '',
+	  comname: '',
+	  comjob: '',
+	  comaria: [],
+	  detail: '',
+	  comsalary: '',
+	});
+	
+	const comariaText = computed(() => {
+	return detail.value.comaria.map((d) => CodeToText[d]).join(', ');
   });
-  
   onLoad(async (options) => {
-	console.log(options);
 	res.value = await findById(options._id);
-	console.log(res.value);
 	detail.value = res.value[0];
   });
   
