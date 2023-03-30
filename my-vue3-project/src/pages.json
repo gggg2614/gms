@@ -3,7 +3,8 @@
         {
             "path": "pages/index/index",
             "style": {
-                "navigationBarTitleText": "职位"
+                "navigationBarTitleText": "职位",
+                "navigationStyle":"custom"
             },
             "meta": {
                 "ignoreAuth": true
@@ -54,50 +55,12 @@
     ],
     "subPackages": [
         {
-            "root": "pagesA",
-            "pages": [
-                {
-                    "path": "list/test1/index",
-                    "style": {
-                        "navigationBarTitleText": "test1"
-                    },
-                    "meta": {
-                        "ignoreAuth": true
-                    }
-                },
-                {
-                    "path": "list/test2/index",
-                    "style": {
-                        "navigationBarTitleText": "test2",
-                        "navigationStyle": "custom"
-                    },
-                    "meta": {
-                        "ignoreAuth": true
-                    }
-                }
-            ]
-        },
-        {
             "root": "./pages/company",
             "pages": [
                 {
                     "path": "detail/index",
                     "style": {
                         "navigationBarTitleText": "详情"
-                    }
-                }
-            ]
-        },
-        {
-            "root": "pagesB",
-            "pages": [
-                {
-                    "path": "detail/index",
-                    "style": {
-                        "navigationBarTitleText": "Detail"
-                    },
-                    "meta": {
-                        "ignoreAuth": true
                     }
                 }
             ]
