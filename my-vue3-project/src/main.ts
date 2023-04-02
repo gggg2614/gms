@@ -3,19 +3,13 @@ import App from './App.vue';
 import { setupStore } from '@/state';
 import 'uno.css';
 import 'vant/lib/index.css';
-import { Button, List, Cell, Icon, PullRefresh,Grid,Card } from 'vant';
+import { Button, List, Cell, Icon, PullRefresh, Grid, Card, Skeleton,Search } from 'vant';
+const components = [List, Cell, Button, Icon, PullRefresh, Grid, Card, Skeleton,Search];
 export function createApp() {
 	const app = createSSRApp(App);
-	app.use(List);
-	app.use(Cell);
-	app.use(Button);
-	app.use(Icon);
-	app.use(PullRefresh);
-	app.use(Grid);
-	app.use(Card);
+	components.forEach((component) => app.use(component));
 	// Configure store
 	setupStore(app);
-
 	return {
 		app,
 	};
