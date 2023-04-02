@@ -37,7 +37,7 @@ export class CompanyController {
   }
 
   @Header('Cache-Control', 'max-age=10')
-  @Get(':comname')
+  @Get('comname/:comname')
   findOne(@Param('comname') comname: string) {
     return this.companyService.findOne(comname);
   }

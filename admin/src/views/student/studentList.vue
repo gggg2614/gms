@@ -159,8 +159,13 @@ function hideLoading() {
 }
 
 function init() {
+  
   nextTick(async () => {
-    tableData.value = await findStu();
+    try {
+      tableData.value = await findStu();
+    } catch (error) {
+      ElMessage({message:error})
+    }
     if (!tableData.value) {
       tableLoading.value = true;
     } else {

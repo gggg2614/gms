@@ -194,7 +194,11 @@ function hideLoading() {
 
 function init() {
   nextTick(async () => {
-    tableData.value = await findCom();
+    try {
+      tableData.value = await findCom();
+    } catch (error) {
+      ElMessage({ message: error });
+    }
     if (!tableData.value) {
       tableLoading.value = true;
     } else {
