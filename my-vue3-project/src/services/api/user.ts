@@ -7,3 +7,9 @@ export function findAllCompany() {
 export function findById(id: string) {
 	return request.get(`company/${id}`);
 }
+
+export function findByName(comname?: string) {
+	if (comname) {
+		return request.get(`company/comname/${comname}`);
+	} else return request.get(`company`);
+}

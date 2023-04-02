@@ -19,7 +19,7 @@ export const editCom = (id, data) => {
 
 export const findCom = (comname?) => {
   if (comname) {
-    return http.request("get", `http://localhost:3000/company/${comname}`);
+    return http.request("get", `http://localhost:3000/company/comname/${comname}`);
   } else return http.request("get", `http://localhost:3000/company`);
 };
 
