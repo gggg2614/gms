@@ -7,9 +7,12 @@ import { addStu } from "../../api/student";
 import { useRouter } from "vue-router";
 import { findAllcom } from "../../api/company";
 import injson from "@/assets/json/industry.json";
+import job from '@/assets/json/job.json';
+import major from '@/assets/json/major.json';
 
 const options = regionData;
 let inoptions = ref();
+let joboptions = ref();
 let companyOptions = ref([]);
 const router = useRouter();
 const ruleFormRef = ref<FormInstance>();
@@ -26,11 +29,14 @@ const ruleForm = ref({
   salary: null,
   industry: "",
   phone: null,
-  company: ""
+  company: "",
+  major: [],
+  leaveTime: ''
 });
 
 onMounted(async () => {
   inoptions.value = injson;
+  joboptions.value = job
   let value: any = await findAllcom();
   companyOptions.value = value.map(v => ({
     value: v.comname,
@@ -81,6 +87,14 @@ const validatePhoneRule = (rule: any, value: string, callback: any) => {
   }
 };
 
+const validateLeaveTimeRule = (rule: any, value: string, callback: any) => {
+  if (Number(value) <= 2023) {
+    callback();
+  } else {
+    callback(new Error("请输入正确的时间"));
+  }
+};
+
 //验证
 const rules = reactive<FormRules>({
   stuname: [
@@ -100,21 +114,17 @@ const rules = reactive<FormRules>({
   ],
   workplace: [{ required: true, message: "请输入工作地点", trigger: "blur" }],
   salary: [{ required: true, message: "请输入薪资", trigger: "blur" }],
-  industry: [{ required: true, message: "请输入专业", trigger: "blur" }],
+  industry: [{ required: true, message: "请输入行业", trigger: "blur" }],
   job: [{ required: true, message: "请输入岗位", trigger: "blur" }],
-  company: [{ required: true, message: "请输入公司", trigger: "blur" }]
+  company: [{ required: true, message: "请输入公司", trigger: "blur" }],
+  major: [{ required: true, message: "请输入专业", trigger: "blur" }],
+  leaveTime: [{ required: true, message: "请输入毕业时间", trigger: "blur" },
+  { validator: validateLeaveTimeRule }]
 });
 </script>
 
 <template>
-  <ElForm
-    :model="ruleForm"
-    ref="ruleFormRef"
-    :rules="rules"
-    label-width="80px"
-    :inline="false"
-    size="default"
-  >
+  <ElForm :model="ruleForm" ref="ruleFormRef" :rules="rules" label-width="80px" :inline="false" size="default">
     <ElFormItem label="姓名" prop="stuname">
       <ElInput v-model="ruleForm.stuname"></ElInput>
     </ElFormItem>
@@ -126,63 +136,51 @@ const rules = reactive<FormRules>({
       </ElRadioGroup>
     </ElFormItem>
 
-    <ElFormItem label="专业" prop="industry" style="display: inline-flex;">
-      <el-cascader
-        :options="inoptions"
-        v-model="ruleForm.industry"
-        clearable
-        filterable
-        :show-all-levels="false"
-      >
+    <ElFormItem label="专业" prop="major" style="display: inline-flex;">
+      <el-cascader :options="major" v-model="ruleForm.major" clearable filterable :show-all-levels="false">
       </el-cascader>
     </ElFormItem>
-    <ElFormItem label="班级" prop="stuclass" style="width: 400px;" >
-      <el-slider v-model="ruleForm.stuclass" show-input :min="1" :max="20"/>
+
+    <ElFormItem label="行业" prop="industry" style="display: inline-flex;">
+      <el-cascader :options="inoptions" v-model="ruleForm.industry" clearable filterable :show-all-levels="false">
+      </el-cascader>
+    </ElFormItem>
+    <ElFormItem label="班级" prop="stuclass" style="width: 400px;">
+      <el-slider v-model="ruleForm.stuclass" show-input :min="1" :max="20" />
       <!-- <ElInput v-model="ruleForm.stuclass"></ElInput> -->
     </ElFormItem>
     <ElFormItem label="手机号" prop="phone">
       <ElInput v-model="ruleForm.phone" maxlength="11"></ElInput>
     </ElFormItem>
 
-    <ElFormItem label="薪资" prop="salary">
-      <ElInput v-model="ruleForm.salary"></ElInput>
+    <ElFormItem label="薪资(月)" prop="salary">
+      <ElInput v-model="ruleForm.salary" placeholder="例如:8k "></ElInput>
+    </ElFormItem>
+    <ElFormItem label-width="auto" label="毕业时间(年)" prop="leaveTime">
+      <ElInput v-model="ruleForm.leaveTime" placeholder="例如:2023" maxlength="4"></ElInput>
     </ElFormItem>
     <ElFormItem label="邮箱" prop="email">
       <ElInput v-model="ruleForm.email"></ElInput>
     </ElFormItem>
     <ElFormItem label="岗位" prop="job">
-      <ElInput v-model="ruleForm.job"></ElInput>
+      <!-- <ElInput v-model="ruleForm.job"></ElInput> -->
+      <el-cascader :options="joboptions" v-model="ruleForm.job" clearable filterable :show-all-levels="false">
+      </el-cascader>
     </ElFormItem>
     <!-- <ElFormItem label="公司" prop="company">
       <ElInput v-model="ruleForm.company"></ElInput>
     </ElFormItem> -->
     <ElFormItem label="公司" prop="company">
-      <el-cascader
-        :options="companyOptions"
-        v-model="ruleForm.company"
-        clearable
-        filterable
-        :show-all-levels="false"
-      >
+      <el-cascader :options="companyOptions" v-model="ruleForm.company" clearable filterable :show-all-levels="false">
       </el-cascader>
     </ElFormItem>
     <ElFormItem label="工作地点" prop="workplace">
-      <ElCascader
-        :options="options"
-        v-model="ruleForm.workplace"
-        clearable
-        filterable
-      >
+      <ElCascader :options="options" v-model="ruleForm.workplace" clearable filterable>
       </ElCascader>
     </ElFormItem>
 
     <ElFormItem label="住址" prop="address">
-      <ElCascader
-        :options="options"
-        v-model="ruleForm.address"
-        clearable
-        filterable
-      >
+      <ElCascader :options="options" v-model="ruleForm.address" clearable filterable>
       </ElCascader>
     </ElFormItem>
     <ElFormItem>
