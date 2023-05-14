@@ -40,7 +40,6 @@
     "axios": "^1.2.0",
     "dayjs": "^1.11.6",
     "echarts": "^5.4.0",
-    "element-china-area-data": "^5.0.2",
     "element-plus": "^2.2.27",
     "element-resize-detector": "^1.2.4",
     "js-cookie": "^3.0.1",

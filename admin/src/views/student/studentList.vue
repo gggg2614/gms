@@ -46,11 +46,11 @@
             <ElInput v-model="editData.company"></ElInput>
           </ElFormItem>
           <ElFormItem label="住址" prop="address">
-            <ElCascader :options="options" v-model="editData.address" clearable filterable>
+            <ElCascader :options="aria" v-model="editData.address" clearable filterable>
             </ElCascader>
           </ElFormItem>
           <ElFormItem label="工作地点" prop="workplace">
-            <ElCascader :options="options" v-model="editData.workplace" clearable filterable>
+            <ElCascader :options="aria" v-model="editData.workplace" clearable filterable>
             </ElCascader>
           </ElFormItem>
         </ElForm>
@@ -78,17 +78,9 @@
       <el-table-column prop="leaveTime" label="毕业时间" width="99" :filters="leaveYear" :filter-method="filterYear" />
       <el-table-column prop="email" label="邮箱" width="155" />
       <el-table-column prop="job[1]" label="岗位" :filters="job" :filter-method="filterJob" />
-      <el-table-column prop="company" label="公司" />
-      <el-table-column label="住址">
-        <template v-slot="scope">
-          {{ scope.row.address.map(d => CodeToText[d]).toString() }}
-        </template>
-      </el-table-column>
-      <el-table-column label="工作地点">
-        <template v-slot="scope">
-          {{ scope.row.workplace.map(d => CodeToText[d]).toString() }}
-        </template>
-      </el-table-column>
+      <el-table-column prop="company" label="公司"/>
+      <el-table-column label="住址" prop="address" :filters="aria" :filter-method="filterAddress"/>
+      <el-table-column label="工作地点" prop="workplace" :filters="aria" :filter-method="filterWorkplace"/>
       <el-table-column label="操作" v-slot="scope" width="158">
         <el-button v-btn-debounce type="primary" size="default" @click="dialogOpen(scope.row)">编辑</el-button>
         <el-button type="danger" size="default" @click="deleteClick(scope.row)">删除</el-button>
@@ -101,13 +93,12 @@
 import { onMounted } from "vue";
 import { ref } from "vue";
 import { delStu, editStu, findStu } from "@/api/student";
-import { regionData, CodeToText } from "element-china-area-data";
 import { nextTick } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import job from '@/assets/json/job.json';
+import aria from '@/assets/json/aria.json';
 import major from '@/assets/json/major.json';
 import leaveYear from '@/assets/json/year.json';
-const options = regionData;
 let tableData = ref();
 let dialogVisible = ref(false);
 let tableLoading = ref(true);
@@ -136,6 +127,12 @@ async function handleFindPhone() {
   console.log(phoneFind);
 }
 
+const filterWorkplace = (value, row) => {
+  return row.workplace.indexOf(value) > -1
+}
+const filterAddress = (value, row) => {
+  return row.address.indexOf(value) > -1
+}
 const filterYear = (value, row) => {
   return row.leaveTime.indexOf(value) > -1
 }
