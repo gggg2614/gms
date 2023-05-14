@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
-import { regionData } from "element-china-area-data";
 import { ElMessage, FormInstance, FormRules } from "element-plus";
 import { validEmail, validPhone, validName } from "@/utils/validate";
 import { addStu } from "../../api/student";
 import { useRouter } from "vue-router";
 import { findAllcom } from "../../api/company";
+import aria from '@/assets/json/aria.json';
 import injson from "@/assets/json/industry.json";
 import job from '@/assets/json/job.json';
 import major from '@/assets/json/major.json';
 
-const options = regionData;
 let inoptions = ref();
 let joboptions = ref();
 let companyOptions = ref([]);
@@ -175,12 +174,12 @@ const rules = reactive<FormRules>({
       </el-cascader>
     </ElFormItem>
     <ElFormItem label="工作地点" prop="workplace">
-      <ElCascader :options="options" v-model="ruleForm.workplace" clearable filterable>
+      <ElCascader :options="aria" v-model="ruleForm.workplace" clearable filterable>
       </ElCascader>
     </ElFormItem>
 
     <ElFormItem label="住址" prop="address">
-      <ElCascader :options="options" v-model="ruleForm.address" clearable filterable>
+      <ElCascader :options="aria" v-model="ruleForm.address" clearable filterable>
       </ElCascader>
     </ElFormItem>
     <ElFormItem>
