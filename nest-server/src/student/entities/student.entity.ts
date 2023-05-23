@@ -26,7 +26,7 @@ export class Student {
   @Prop()
   salary: string;
   @Prop()
-  job: Array<string>; 
+  job: Array<string>;
   @Prop()
   industry: Array<string>;
   @Prop()
@@ -35,6 +35,8 @@ export class Student {
   major: Array<string>;
   @Prop()
   leaveTime: string;
+  @Prop()
+  workStatus: string;
 }
 
 export const StudentSchema = SchemaFactory.createForClass(Student);

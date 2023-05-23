@@ -30,7 +30,8 @@ const ruleForm = ref({
   phone: null,
   company: "",
   major: [],
-  leaveTime: ''
+  leaveTime: '',
+  workStatus: ref(''),
 });
 
 onMounted(async () => {
@@ -51,7 +52,7 @@ const onSubmit = async () => {
       console.log(res);
       if (res._id) {
         ElMessage({ type: "success", message: "添加成功" });
-        router.push("/student/list");
+        // router.push("/student/list");
       } else {
         ElMessage({
           type: "error",
@@ -102,6 +103,7 @@ const rules = reactive<FormRules>({
   ],
   address: [{ required: true, message: "请选择居住地", trigger: "blur" }],
   gender: [{ required: true, message: "请选择性别", trigger: "blur" }],
+  workStatus: [{ required: true, message: "请选择毕业状态", trigger: "blur" }],
   stuclass: [{ required: true, message: "请输入班级", trigger: "blur" }],
   phone: [
     { required: true, message: "请输入手机号", trigger: "blur" },
@@ -125,7 +127,7 @@ const rules = reactive<FormRules>({
 <template>
   <ElForm :model="ruleForm" ref="ruleFormRef" :rules="rules" label-width="80px" :inline="false" size="default">
     <ElFormItem label="姓名" prop="stuname">
-      <ElInput v-model="ruleForm.stuname"></ElInput>
+      <ElInput v-model.trim="ruleForm.stuname" ></ElInput>
     </ElFormItem>
 
     <ElFormItem label="性别" prop="gender">
@@ -135,40 +137,45 @@ const rules = reactive<FormRules>({
       </ElRadioGroup>
     </ElFormItem>
 
-    <ElFormItem label="专业" prop="major" style="display: inline-flex;">
+    <ElFormItem label-width="auto" label="是否就业(毕业前)" prop="workStatus">
+      <ElRadioGroup v-model="ruleForm.workStatus">
+        <ElRadioButton label="是" />
+        <ElRadioButton label="否" />
+      </ElRadioGroup>
+    </ElFormItem>
+
+    <ElFormItem label="专业" prop="major">
       <el-cascader :options="major" v-model="ruleForm.major" clearable filterable :show-all-levels="false">
       </el-cascader>
     </ElFormItem>
 
-    <ElFormItem label="行业" prop="industry" style="display: inline-flex;">
+    <ElFormItem label="行业" prop="industry" >
       <el-cascader :options="inoptions" v-model="ruleForm.industry" clearable filterable :show-all-levels="false">
       </el-cascader>
     </ElFormItem>
     <ElFormItem label="班级" prop="stuclass" style="width: 400px;">
-      <el-slider v-model="ruleForm.stuclass" show-input :min="1" :max="20" />
+      <el-slider v-model="ruleForm.stuclass" show-input :min="1" :max="12" />
       <!-- <ElInput v-model="ruleForm.stuclass"></ElInput> -->
     </ElFormItem>
     <ElFormItem label="手机号" prop="phone">
-      <ElInput v-model="ruleForm.phone" maxlength="11"></ElInput>
+      <ElInput v-model.trim="ruleForm.phone" maxlength="11"></ElInput>
     </ElFormItem>
 
     <ElFormItem label="薪资(月)" prop="salary">
-      <ElInput v-model="ruleForm.salary" placeholder="例如:8k "></ElInput>
+      <ElInput v-model.trim="ruleForm.salary" placeholder="例如:8k "></ElInput>
     </ElFormItem>
     <ElFormItem label-width="auto" label="毕业时间(年)" prop="leaveTime">
-      <ElInput v-model="ruleForm.leaveTime" placeholder="例如:2023" maxlength="4"></ElInput>
+      <ElInput v-model.trim="ruleForm.leaveTime" placeholder="例如:2023" maxlength="4"></ElInput>
     </ElFormItem>
     <ElFormItem label="邮箱" prop="email">
-      <ElInput v-model="ruleForm.email"></ElInput>
+      <ElInput v-model.trim="ruleForm.email"></ElInput>
     </ElFormItem>
-    <ElFormItem label="岗位" prop="job">
-      <!-- <ElInput v-model="ruleForm.job"></ElInput> -->
+
+    <template v-if="ruleForm.workStatus === '是'">
+          <ElFormItem label="岗位" prop="job" >
       <el-cascader :options="joboptions" v-model="ruleForm.job" clearable filterable :show-all-levels="false">
       </el-cascader>
     </ElFormItem>
-    <!-- <ElFormItem label="公司" prop="company">
-      <ElInput v-model="ruleForm.company"></ElInput>
-    </ElFormItem> -->
     <ElFormItem label="公司" prop="company">
       <el-cascader :options="companyOptions" v-model="ruleForm.company" clearable filterable :show-all-levels="false">
       </el-cascader>
@@ -177,7 +184,7 @@ const rules = reactive<FormRules>({
       <ElCascader :options="aria" v-model="ruleForm.workplace" clearable filterable>
       </ElCascader>
     </ElFormItem>
-
+    </template>
     <ElFormItem label="住址" prop="address">
       <ElCascader :options="aria" v-model="ruleForm.address" clearable filterable>
       </ElCascader>
@@ -189,4 +196,8 @@ const rules = reactive<FormRules>({
   </ElForm>
 </template>
 
-<style scoped></style>
+<style scoped>
+::v-deep .el-input{
+  width: 200px;
+}
+</style>

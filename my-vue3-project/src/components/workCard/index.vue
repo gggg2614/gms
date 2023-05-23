@@ -1,5 +1,5 @@
 <template name="workCard">
-	<van-pull-refresh :refreshing="refreshing" @update:refreshing="(newValue: () => boolean) => refreshing= newValue" @refresh="$emit('onRefresh')">
+	<van-pull-refresh style="height:100%" :refreshing="refreshing" @update:refreshing="(newValue: () => boolean) => refreshing= newValue" @refresh="$emit('onRefresh')">
 		<van-skeleton :loading="loading" row="3">
 			<van-list
 				@load="$emit('onLoad')"
@@ -21,7 +21,7 @@
 					"
 				>
 					<div style="font-size: 1.2em" class="_u_flex-1">
-						<div class="_u_float-left _u_c-black _u_font-1000">{{ item.comjob }}</div>
+						<div class="_u_float-left _u_c-black _u_font-1000">{{ item.comjob[2] }}</div>
 						<div class="_u_float-right _u_mr-3 _u_c-indigo-3">{{ item.comsalary }}</div>
 						<div
 							v-if="useAuthStore().stuindustry?.toString() === item.industry?.toString() && useAuthStore().stuindustry?.toString() !== undefined"

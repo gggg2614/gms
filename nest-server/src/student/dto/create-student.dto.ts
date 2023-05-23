@@ -13,4 +13,5 @@ export class CreateStudentDto {
     readonly industries: Array<string>
     readonly major: Array<string>
     readonly leaveTime:string
+    readonly workStatus: string
 }
