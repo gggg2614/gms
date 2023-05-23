@@ -73,22 +73,24 @@
       v-loading="tableLoading">
       <el-table-column type="selection" width="55" />
       <el-table-column prop="stuname" label="名字" />
-      <el-table-column prop="gender" label="性别" :filters="[{ text: '男', value: '男' }, { text: '女', value: '女' }]" 
+      <el-table-column prop="gender" label="性别" :filters="[{ text: '男', value: '男' }, { text: '女', value: '女' }]"
         :filter-method="filterGender" />
-      <el-table-column prop="stuclass" label="班级" width="110" :filters="classNum" :filter-method="filterClass"  align="center">
+      <el-table-column prop="stuclass" label="班级" width="110" :filters="classNum" :filter-method="filterClass"
+        align="center">
         <template #default="scope">
           {{ scope.row.major[2] + '' + scope.row.stuclass + '班' }}
         </template>
       </el-table-column>
-      <el-table-column prop="phone" label="手机号" width="110"  align="center" />
+      <el-table-column prop="phone" label="手机号" width="110" align="center" />
       <el-table-column prop="major[2]" label="专业" width="110" :filters="major" :filter-method="filterMajor" align="center"
         show-overflow-tooltip />
-      <el-table-column prop="industry" label="行业" width="110" show-overflow-tooltip  />
-      <el-table-column prop="salary" sortable label="薪资(月)" width="100"  />
+      <el-table-column prop="industry" label="行业" width="110" show-overflow-tooltip />
+      <el-table-column prop="salary" sortable label="薪资(月)" width="100" />
       <el-table-column prop="leaveTime" label="毕业时间" width="99" :filters="leaveYear" :filter-method="filterYear" />
-      <el-table-column prop="email" label="邮箱" width="155"  align="center" />
-      <el-table-column prop="workStatus" label="是否就业" width="99" :filters="[{ text: '是', value: '是' }, { text: '否', value: '否' }]"
-        :filter-method="filterWorkStatus" align="center">
+      <el-table-column prop="email" label="邮箱" width="155" align="center" />
+      <el-table-column prop="workStatus" label="是否就业" width="99"
+        :filters="[{ text: '是', value: '是' }, { text: '否', value: '否' }]" :filter-method="filterWorkStatus"
+        align="center">
         <template v-slot="scope">
           <span v-if="scope.row.workStatus === '是'">
             <el-icon style="color:#67C23A">
@@ -102,8 +104,8 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="job[1]" label="岗位" :filters="job" :filter-method="filterJob"  align="center" />
-      <el-table-column prop="company" label="公司"  align="center" />
+      <el-table-column prop="job[1]" label="岗位" :filters="job" :filter-method="filterJob" align="center" />
+      <el-table-column prop="company" label="公司" align="center" />
       <el-table-column label="住址" prop="address" :filters="aria" :filter-method="filterAddress" show-overflow-tooltip />
       <el-table-column label="工作地点" width="99" prop="workplace" :filters="aria" :filter-method="filterWorkplace"
         show-overflow-tooltip />
@@ -119,7 +121,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import { ref, reactive } from "vue";
 import { delStu, editStu, findStu } from "@/api/student";
 import { nextTick } from "vue";
@@ -217,7 +219,6 @@ let editData = ref({
 });
 let currentPage = ref(1);
 let pageSize = ref(10);
-let totalRows = computed(() => Math.ceil(tableData.value.length / pageSize.value));
 
 // 当每页显示数量改变时触发
 const handleSizeChange = (val) => {

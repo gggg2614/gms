@@ -92,7 +92,7 @@
       </span>
     </el-dialog>
 
-    <el-table :data="tableData" style="width: 100%" v-loading="tableLoading">
+    <el-table  :cell-style="{ height: '116px' }" height="800" :data="getPaginatedData()" style="width: 100%" v-loading="tableLoading">
       <!-- <el-table-column prop="_id" label="id" width="180" /> -->
       <el-table-column prop="comname" label="名字" />
       <el-table-column prop="comjob" label="岗位" />
@@ -116,6 +116,9 @@
         >
       </el-table-column>
     </el-table>
+    <el-pagination style="float: right" @size-change="handleSizeChange" @current-change="handleCurrentChange"
+      :current-page="currentPage" :page-sizes="[10, 20, 30, 40]" :total="tableData.length"
+      layout="total, sizes, prev, pager, next, jumper"></el-pagination>
   </div>
 </template>
 
@@ -142,7 +145,7 @@ const editorConfig = { placeholder: "请输入内容..." };
 const options = regionData;
 let files = ref([]);
 let inoptions = ref();
-let tableData = ref();
+let tableData = ref([]);
 let dialogVisible = ref(false);
 let tableLoading = ref(true);
 let phoneFind = ref("");
@@ -155,6 +158,34 @@ let editData = ref({
   industry: "",
   detail: ""
 });
+let currentPage = ref(1);
+let pageSize = ref(10);
+
+// 当每页显示数量改变时触发
+const handleSizeChange = (val) => {
+  pageSize.value = val;
+  currentPage.value = 1; // 重置当前页为第一页
+};
+
+// 当页码改变时触发
+const handleCurrentChange = (val) => {
+  currentPage.value = val;
+};
+
+const getPaginatedData = () => {
+  const offset = (currentPage.value - 1) * pageSize.value;
+  return tableData.value.slice(offset, offset + pageSize.value);
+};
+
+const fetchData = async () => {
+  tableLoading.value = true;
+  try {
+    tableData.value = await findCom();
+  } catch (error) {
+    ElMessage({ message: error });
+  }
+  tableLoading.value = false;
+};
 
 async function beforeUpload(file) {
   if (file.name.split(".")[1] !== "xlsx") {
@@ -211,6 +242,7 @@ function init() {
 
 onMounted(async () => {
   init();
+  await fetchData()
   inoptions.value = injson;
 });
 
