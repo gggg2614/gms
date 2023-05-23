@@ -41,7 +41,7 @@
             <ElInput v-model="editData.comname"></ElInput>
           </ElFormItem>
           <ElFormItem label="岗位" prop="job">
-            <ElInput v-model="editData.comjob"></ElInput>
+            <el-cascader :options="job" v-model="editData.comjob" clearable filterable :show-all-levels="false"></el-cascader>
           </ElFormItem>
           <ElFormItem label="行业" prop="industry">
             <el-cascader
@@ -127,6 +127,8 @@ import { regionData, CodeToText } from "element-china-area-data";
 import { nextTick } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import "@wangeditor/editor/dist/css/style.css"; // 引入 css
+import job from '@/assets/json/job.json';
+
 
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import { getToken } from "../../utils/auth";

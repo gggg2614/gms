@@ -7,6 +7,7 @@ import { addCom } from "../../api/company";
 import { useRouter } from "vue-router";
 import injson from "@/assets/json/industry.json";
 import "@wangeditor/editor/dist/css/style.css"; // 引入 css
+import job from '@/assets/json/job.json';
 
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 
@@ -26,7 +27,7 @@ const ruleForm = ref({
   comjob: "",
   industry: "",
   // phone: null,
-  detail:ref('')
+  detail: ref('')
 });
 const handleCreated = editor => {
   editorRef.value = editor; // 记录 editor 实例，重要！
@@ -106,63 +107,37 @@ const rules = reactive<FormRules>({
 </script>
 
 <template>
-  <ElForm
-    :model="ruleForm"
-    ref="ruleFormRef"
-    :rules="rules"
-    label-width="80px"
-    :inline="false"
-    size="default"
-  >
+  <ElForm :model="ruleForm" ref="ruleFormRef" :rules="rules" label-width="80px" :inline="false" size="default">
     <ElFormItem label="公司名字" prop="comname">
-      <ElInput v-model="ruleForm.comname"></ElInput>
+      <ElInput v-model.trim="ruleForm.comname"></ElInput>
     </ElFormItem>
 
     <ElFormItem label="岗位" prop="comjob">
-      <ElInput v-model="ruleForm.comjob"></ElInput>
+      <el-cascader :options="job" v-model="ruleForm.comjob" clearable filterable
+        :show-all-levels="false"></el-cascader>
     </ElFormItem>
 
     <ElFormItem label="行业" prop="industry">
-      <el-cascader
-        :options="inoptions"
-        v-model="ruleForm.industry"
-        clearable
-        filterable
-        :show-all-levels="false"
-      >
+      <el-cascader :options="inoptions" v-model="ruleForm.industry" clearable filterable :show-all-levels="false">
       </el-cascader>
     </ElFormItem>
     <ElFormItem label="薪资" prop="comsalary">
-      <ElInput v-model="ruleForm.comsalary"></ElInput>
+      <ElInput v-model.trim="ruleForm.comsalary"></ElInput>
     </ElFormItem>
     <!-- <ElFormItem label="邮箱" prop="email">
       <ElInput v-model="ruleForm.email"></ElInput>
     </ElFormItem> -->
 
     <ElFormItem label="地址" prop="comaria">
-      <ElCascader
-        :options="options"
-        v-model="ruleForm.comaria"
-        clearable
-        filterable
-      >
+      <ElCascader :options="options" v-model="ruleForm.comaria" clearable filterable>
       </ElCascader>
     </ElFormItem>
     <ElFormItem label="细节" prop="detail">
       <div style="border: 1px solid #ccc">
-        <Toolbar
-          style="border-bottom: 1px solid #ccc"
-          :editor="editorRef"
-          :defaultConfig="toolbarConfig"
-          mode="default"
-        />
-        <Editor
-          style="height: 500px; overflow-y: hidden"
-          v-model="ruleForm.detail"
-          :defaultConfig="editorConfig"
-          mode="default"
-          @onCreated="handleCreated"
-        />
+        <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig"
+          mode="default" />
+        <Editor style="height: 500px; overflow-y: hidden" v-model="ruleForm.detail" :defaultConfig="editorConfig"
+          mode="default" @onCreated="handleCreated" />
       </div>
     </ElFormItem>
     <ElFormItem>

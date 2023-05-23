@@ -5,9 +5,9 @@ import ElementPlus from "element-plus";
 import { getServerConfig } from "./config";
 import { createApp, Directive } from "vue";
 import { MotionPlugin } from "@vueuse/motion";
-// import { useEcharts } from "@/plugins/echarts";
+import { useEcharts } from "@/plugins/echarts";
 import { injectResponsiveStorage } from "@/utils/responsive";
-
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // import Table from "@pureadmin/table";
 // import PureDescriptions from "@pureadmin/descriptions";
 
@@ -23,7 +23,9 @@ import "./assets/iconfont/iconfont.js";
 import "./assets/iconfont/iconfont.css";
 
 const app = createApp(App);
-
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
 // 自定义指令
 import * as directives from "@/directives";
 Object.keys(directives).forEach(key => {
@@ -49,8 +51,8 @@ getServerConfig(app).then(async config => {
   await router.isReady();
   injectResponsiveStorage(app, config);
   setupStore(app);
-  app.use(MotionPlugin).use(ElementPlus);
-  // .use(useEcharts);
+  app.use(MotionPlugin).use(ElementPlus)
+  .use(useEcharts);
   // .use(Table);
   // .use(PureDescriptions);
   app.mount("#app");

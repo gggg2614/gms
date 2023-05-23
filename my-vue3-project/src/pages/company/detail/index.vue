@@ -28,15 +28,14 @@ let detail = ref({
 const comariaText = computed(() => {
 	return detail.value.comaria.map((d) => CodeToText[d]).join(', ');
 });
-onLoad(async (options) => {
+onLoad(async (options: any) => {
 	res.value = await findById(options._id);
 	detail.value = res.value[0];
 	uni.setNavigationBarTitle({
 		title: detail.value.comname,
 	});
 });
-onShow(() => {
-});
+onShow(() => {});
 onMounted(() => {});
 </script>
 

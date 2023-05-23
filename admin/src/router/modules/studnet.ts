@@ -11,7 +11,7 @@ export default {
     {
       path: "/student/add",
       name: "studentAdd",
-      showParent:true,
+      showParent: true,
       component: () => import("@/views/student/studentAdd.vue"),
       meta: {
         title: "新增毕业生"
@@ -20,12 +20,20 @@ export default {
     {
       path: "/student/list",
       name: "studentList",
-      showParent:true,
+      showParent: true,
       component: () => import("@/views/student/studentList.vue"),
       meta: {
         title: "毕业生列表"
       }
     },
-    
+    {
+      path: "/student/chart",
+      name: "studentChart",
+      showParent: true,
+      component: () => import("@/views/student/studentChart.vue"),
+      meta: {
+        title: "毕业生信息分析"
+      }
+    },
   ]
-} as RouteConfigsTable;
+} as unknown as RouteConfigsTable;
