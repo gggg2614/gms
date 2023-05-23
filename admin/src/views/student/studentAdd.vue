@@ -52,7 +52,7 @@ const onSubmit = async () => {
       console.log(res);
       if (res._id) {
         ElMessage({ type: "success", message: "添加成功" });
-        // router.push("/student/list");
+        router.push("/student/list");
       } else {
         ElMessage({
           type: "error",
@@ -127,7 +127,7 @@ const rules = reactive<FormRules>({
 <template>
   <ElForm :model="ruleForm" ref="ruleFormRef" :rules="rules" label-width="80px" :inline="false" size="default">
     <ElFormItem label="姓名" prop="stuname">
-      <ElInput v-model.trim="ruleForm.stuname" ></ElInput>
+      <ElInput v-model.trim="ruleForm.stuname"></ElInput>
     </ElFormItem>
 
     <ElFormItem label="性别" prop="gender">
@@ -149,7 +149,7 @@ const rules = reactive<FormRules>({
       </el-cascader>
     </ElFormItem>
 
-    <ElFormItem label="行业" prop="industry" >
+    <ElFormItem label="行业" prop="industry">
       <el-cascader :options="inoptions" v-model="ruleForm.industry" clearable filterable :show-all-levels="false">
       </el-cascader>
     </ElFormItem>
@@ -161,9 +161,6 @@ const rules = reactive<FormRules>({
       <ElInput v-model.trim="ruleForm.phone" maxlength="11"></ElInput>
     </ElFormItem>
 
-    <ElFormItem label="薪资(月)" prop="salary">
-      <ElInput v-model.trim="ruleForm.salary" placeholder="例如:8k "></ElInput>
-    </ElFormItem>
     <ElFormItem label-width="auto" label="毕业时间(年)" prop="leaveTime">
       <ElInput v-model.trim="ruleForm.leaveTime" placeholder="例如:2023" maxlength="4"></ElInput>
     </ElFormItem>
@@ -172,18 +169,21 @@ const rules = reactive<FormRules>({
     </ElFormItem>
 
     <template v-if="ruleForm.workStatus === '是'">
-          <ElFormItem label="岗位" prop="job" >
-      <el-cascader :options="joboptions" v-model="ruleForm.job" clearable filterable :show-all-levels="false">
-      </el-cascader>
-    </ElFormItem>
-    <ElFormItem label="公司" prop="company">
-      <el-cascader :options="companyOptions" v-model="ruleForm.company" clearable filterable :show-all-levels="false">
-      </el-cascader>
-    </ElFormItem>
-    <ElFormItem label="工作地点" prop="workplace">
-      <ElCascader :options="aria" v-model="ruleForm.workplace" clearable filterable>
-      </ElCascader>
-    </ElFormItem>
+      <ElFormItem label="薪资(月)" prop="salary">
+        <ElInput v-model.trim="ruleForm.salary" placeholder="例如:8k "></ElInput>
+      </ElFormItem>
+      <ElFormItem label="岗位" prop="job">
+        <el-cascader :options="joboptions" v-model="ruleForm.job" clearable filterable :show-all-levels="false">
+        </el-cascader>
+      </ElFormItem>
+      <ElFormItem label="公司" prop="company">
+        <el-cascader :options="companyOptions" v-model="ruleForm.company" clearable filterable :show-all-levels="false">
+        </el-cascader>
+      </ElFormItem>
+      <ElFormItem label="工作地点" prop="workplace">
+        <ElCascader :options="aria" v-model="ruleForm.workplace" clearable filterable>
+        </ElCascader>
+      </ElFormItem>
     </template>
     <ElFormItem label="住址" prop="address">
       <ElCascader :options="aria" v-model="ruleForm.address" clearable filterable>
@@ -197,7 +197,7 @@ const rules = reactive<FormRules>({
 </template>
 
 <style scoped>
-::v-deep .el-input{
+::v-deep .el-input {
   width: 200px;
 }
 </style>

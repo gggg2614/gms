@@ -4,6 +4,9 @@
       <el-input style="width: 200px" v-model="phoneFind" placeholder="请输入手机号" size="default" clearable></el-input>
       <el-button type="primary" size="default" @click="handleFindPhone" v-btn-debounce>查找</el-button>
       <el-button @click="clearFilter" type="primary" size="default">重置筛选</el-button>
+      <el-button type="primary" size="default" @click="exportExcel">导出Excel</el-button>
+      <el-button type="primary" size="default" @click="exportExcelSel"
+        :disabled="selectedStu.length === 0">导出选中Excel</el-button>
     </div>
     <el-dialog title="编辑学生信息" v-model="dialogVisible" width="30%">
       <span slot="footer">
@@ -69,8 +72,8 @@
       </span>
     </el-dialog>
 
-    <el-table :cell-style="{ height: '116px' }" height="800" ref="tableRef" :data="getPaginatedData()" style="width: 100%"
-      v-loading="tableLoading">
+    <el-table :cell-style="{ height: '116px' }" height="800" ref="tableRef" :data="getPaginatedData" style="width: 100%"
+      v-loading="tableLoading" @selection-change="handleSelectionChange" :row-key="row => row._id">
       <el-table-column type="selection" width="55" />
       <el-table-column prop="stuname" label="名字" />
       <el-table-column prop="gender" label="性别" :filters="[{ text: '男', value: '男' }, { text: '女', value: '女' }]"
@@ -122,7 +125,7 @@
 
 <script lang="ts" setup>
 import { onMounted } from "vue";
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { delStu, editStu, findStu } from "@/api/student";
 import { nextTick } from "vue";
 import { ElMessage, ElMessageBox, FormInstance, FormRules, TableInstance } from "element-plus";
@@ -132,6 +135,7 @@ import major from '@/assets/json/major.json';
 import leaveYear from '@/assets/json/year.json';
 import injson from "@/assets/json/industry.json";
 import { validEmail, validPhone, validName } from "@/utils/validate";
+import * as XLSX from "xlsx";
 
 const validateNameRule = (rule: any, value: string, callback: any) => {
   if (validName(value)) {
@@ -198,6 +202,7 @@ let dialogVisible = ref(false);
 let tableLoading = ref(true);
 let phoneFind = ref("");
 let classNum = [{ text: '1', value: 1 }, { text: '2', value: 2 }, { text: '3', value: 3 }, { text: '4', value: 4 }, { text: '5', value: 5 }, { text: '6', value: 6 }, { text: '7', value: 7 }, { text: '8', value: 8 }, { text: '9', value: 9 }, { text: '10', value: 10 }, { text: '11', value: 11 }, { text: '12', value: 12 }];
+let selectedStu = ref([])
 let editData = ref({
   _id: "",
   stuname: "",
@@ -220,6 +225,58 @@ let editData = ref({
 let currentPage = ref(1);
 let pageSize = ref(10);
 
+const exportExcel = () => {
+  const dataFormat = tableData.value.map(item => ({
+    ...item,
+    job: Array.isArray(item.job) ? item.job.join(", ") : item.job,
+    workplace: Array.isArray(item.workplace) ? item.workplace.join(", ") : item.workplace,
+    company: Array.isArray(item.company) ? item.company.join(", ") : item.company,
+    major: Array.isArray(item.major) ? item.major.join(" , ") : item.major
+  })).map(item => {
+    const { _id, __v, ...rest } = item
+    return rest
+  });
+  const worksheet = XLSX.utils.json_to_sheet(dataFormat);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "学生信息");
+  const excelBuffer = XLSX.write(workbook, {
+    bookType: "xlsx",
+    type: "array"
+  });
+  saveAsExcel(excelBuffer, "学生信息.xlsx");
+};
+const exportExcelSel = () => {
+  const dataFormat = selectedStu.value.map(item => ({
+    ...item,
+    job: Array.isArray(item.job) ? item.job.join(", ") : item.job,
+    workplace: Array.isArray(item.workplace) ? item.workplace.join(", ") : item.workplace,
+    company: Array.isArray(item.company) ? item.company.join(", ") : item.company,
+    major: Array.isArray(item.major) ? item.major.join(" , ") : item.major
+  })).map(item => {
+    const { _id, __v, ...rest } = item
+    return rest
+  });
+  const worksheet = XLSX.utils.json_to_sheet(dataFormat);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "学生信息");
+  const excelBuffer = XLSX.write(workbook, {
+    bookType: "xlsx",
+    type: "array"
+  });
+  saveAsExcel(excelBuffer, "学生信息.xlsx");
+};
+
+const saveAsExcel = (buffer, fileName) => {
+  const data = new Blob([buffer], { type: "application/octet-stream" });
+  const link = document.createElement("a");
+  link.href = window.URL.createObjectURL(data);
+  link.download = fileName;
+  link.click();
+};
+
+const handleSelectionChange = (val) => {
+  selectedStu.value = val
+}
 // 当每页显示数量改变时触发
 const handleSizeChange = (val) => {
   pageSize.value = val;
@@ -231,10 +288,10 @@ const handleCurrentChange = (val) => {
   currentPage.value = val;
 };
 
-const getPaginatedData = () => {
+const getPaginatedData = computed(() => {
   const offset = (currentPage.value - 1) * pageSize.value;
   return tableData.value.slice(offset, offset + pageSize.value);
-};
+});
 
 const fetchData = async () => {
   tableLoading.value = true;
